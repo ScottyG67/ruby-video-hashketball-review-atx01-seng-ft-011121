@@ -197,7 +197,17 @@ stats_player
 end
 
 def big_shoe_rebounds
-  
-  game_hash.each do |team,information|
-    information[:players]
+  shoe_rebounds=0
+  size = nil
+  size = game_hash.map {|team,team_information| team_information[:players].map {|stats2| stats2[:shoe]}}.flatten.max
+  game_hash.each do |team,team_information|
+    team_information[:players].each do |stats|
+      if stats[:shoe] == size
+        shoe_rebounds=stats[:rebounds]
+        break
+      end
+    end
+  end
+  shoe_rebounds
+end
     
